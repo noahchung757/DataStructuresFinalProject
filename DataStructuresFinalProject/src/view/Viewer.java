@@ -1,4 +1,7 @@
 package view;
+import java.awt.BorderLayout;
+
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -10,10 +13,11 @@ import javax.swing.JPanel;
 public class Viewer {
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
-		JPanel panel = new Panel();
+		JPanel panel = new MainPanel();
+		frame.setLayout(new BorderLayout());
 		
 		frame.add(panel);
-		frame.setSize(1250, 1000);
+		frame.setSize(550, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
