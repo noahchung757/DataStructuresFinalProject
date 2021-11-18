@@ -13,6 +13,7 @@ public class MainPanel extends JPanel {
 	JPanel storeGamesPanel = new StoreGamesPanel();
 	JPanel searchGamesPanel = new SearchGamesPanel();
 	JPanel gamesByGenrePanel = new GamesByGenrePanel();
+	JPanel panelTest = new JPanel();
 	
 	MainPanel()  {
 		setLayout(new BorderLayout());
