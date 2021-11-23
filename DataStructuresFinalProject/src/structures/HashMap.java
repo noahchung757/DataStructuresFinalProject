@@ -1,5 +1,7 @@
 package structures;
 
+import java.text.DecimalFormat;
+
 import exceptions.MapEmptyException;
 import model.Game;
 
@@ -129,14 +131,14 @@ private Node head;
 			throw new MapEmptyException();
 		}
 		String gameString = "";
-		
+		DecimalFormat df = new DecimalFormat("0.00");
 		Node currNode = head;
 		while (currNode != null) {
 			if (currNode.next == null) {
-				gameString = gameString + currNode.gameName + ": Price: $" + currNode.game.getPrice() + " - Quantity: " + currNode.game.getQuantity();
+				gameString = gameString + currNode.gameName + ": Price: $" + df.format(currNode.game.getPrice()) + " - Quantity: " + currNode.game.getQuantity();
 			}
 			else {
-				gameString = gameString + currNode.gameName + ": Price: $" + currNode.game.getPrice() + " - Quantity: " + currNode.game.getQuantity() + "\n";
+				gameString = gameString + currNode.gameName + ": Price: $" + df.format(currNode.game.getPrice()) + " - Quantity: " + currNode.game.getQuantity() + "\n";
 			}
 			currNode = currNode.next;
 		}
