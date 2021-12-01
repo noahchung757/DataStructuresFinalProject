@@ -1,0 +1,8 @@
+Fgc
+Smash,20.00,1
+Injustice,30.00,2
+Mmo
+Marvel heroes,0.00,1
+Rpg
+Zelda,20.00,1
+Mass Effect,606.00,3

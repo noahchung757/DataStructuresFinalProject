@@ -3,6 +3,12 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -116,14 +122,19 @@ public class MainPanel extends JPanel {
 		private JLabel searchText = new JLabel("Search for game by title:");
 		private JTextField searchField = new JTextField(5);
 		private JButton buyButton = new JButton("Buy");
+		private JButton exitButton = new JButton("Exit");
 		
 		SearchGamesPanel() {
 			buyListener bL = new buyListener();
 			buyButton.addActionListener(bL);
 			
+			exitListener eL = new exitListener();
+			exitButton.addActionListener(eL);
+			
 			add(searchText);
 			add(searchField);
 			add(buyButton);
+			add(exitButton);
 		}
 		
 		class buyListener implements ActionListener {
@@ -151,6 +162,37 @@ public class MainPanel extends JPanel {
 				}
 			}
 		}
+		
+		class exitListener implements ActionListener {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String gameText = "";
+				try {
+				for (int i = 0; i < list.size(); i++) {
+					if (i == 0) {
+						gameText = list.get(i).getName() + "\n" + list.get(i).gameListForFile();
+					}
+					else {
+						gameText = gameText + "\n" + list.get(i).getName() + "\n" + list.get(i).gameListForFile();
+					}
+				}
+				} catch (ListEmptyException e1) {
+					System.out.println("Broken");
+				}
+
+				String fileName = "games.txt";
+				try {
+					FileWriter writer = new FileWriter(fileName, false); // true to append
+					writer.write(gameText);
+					writer.close();
+				} catch (IOException e1) {
+					System.out.println("Broken");
+				}
+			    
+				System.exit(0);
+			}
+			
+		}
 	}
 	
 	public class GamesByGenrePanel extends JPanel {
@@ -175,12 +217,67 @@ public class MainPanel extends JPanel {
 		}
 	}
 	
-	MainPanel()  {
+	public MainPanel() throws ListEmptyException  {
 		setLayout(new BorderLayout());
 		
 		add(searchGamesPanel, BorderLayout.PAGE_START);
 		add(gamesByGenrePanel, BorderLayout.CENTER);
 		add(storeGamesPanel, BorderLayout.PAGE_END);
+		
+		try {
+			File gamesFile = new File("games.txt");
+			gamesFile.createNewFile();
+			
+			FileInputStream fis = new FileInputStream(gamesFile);
+			InputStreamReader r = new InputStreamReader(fis);
+			BufferedReader br = new BufferedReader(r);
+			String line = br.readLine();
+			
+			Genre currGenre = null;
+			while (line != null) {
+				if (line.equals("Games need to be added")) {
+					break;
+				}
+				else if (!line.contains(",")) {
+					if (currGenre != null) {
+						list.add(currGenre);
+					}
+					currGenre = new Genre(line);
+				}
+				else {
+					String name;
+					double price;
+					int quantity;
+					String currString = line;
+					
+					name = currString.substring(0, currString.indexOf(","));
+					currString = currString.substring(currString.indexOf(",") + 1);
+					price = Double.parseDouble(currString.substring(0, currString.indexOf(",")));
+					quantity = Integer.parseInt(currString.substring(currString.indexOf(",") + 1));
+					
+					currGenre.addGame(name, new Game(name, price, quantity));
+				}
+				line = br.readLine();
+			}
+			if (currGenre != null) {
+				list.add(currGenre);
+			}
+			
+			if (!list.isEmpty()) {
+				updatePanel();
+			}
+			
+			fis.close();
+			r.close();
+			br.close();
+		} 
+		catch (IOException e) {
+			
+		}
+		
+		for (int i = 0; i < list.size(); i++) {
+			
+		}
 	}
 	
 	public void updatePanel() throws ListEmptyException {

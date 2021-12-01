@@ -58,4 +58,12 @@ public class Genre {
 			return "Must add games";
 		}
 	}
+	
+	public String gameListForFile() {
+		try {
+			return map.printGamesForFile();
+		} catch (MapEmptyException e) {
+			return "Must add games";
+		}
+	}
 }

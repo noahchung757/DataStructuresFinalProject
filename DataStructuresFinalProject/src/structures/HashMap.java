@@ -11,7 +11,7 @@ import model.Game;
  * Nov 16, 2021
  */
 public class HashMap {
-private Node head;
+	private Node head;
 	
 	static class Node {
 		String gameName;
@@ -139,6 +139,26 @@ private Node head;
 			}
 			else {
 				gameString = gameString + currNode.gameName + ": Price: $" + df.format(currNode.game.getPrice()) + " - Quantity: " + currNode.game.getQuantity() + "\n";
+			}
+			currNode = currNode.next;
+		}
+		
+		return gameString;
+	}
+	
+	public String printGamesForFile() throws MapEmptyException {
+		if (isEmpty()) {
+			throw new MapEmptyException();
+		}
+		String gameString = "";
+		DecimalFormat df = new DecimalFormat("0.00");
+		Node currNode = head;
+		while (currNode != null) {
+			if (currNode.next == null) {
+				gameString = gameString + currNode.gameName + "," + df.format(currNode.game.getPrice()) + "," + currNode.game.getQuantity();
+			}
+			else {
+				gameString = gameString + currNode.gameName + "," + df.format(currNode.game.getPrice()) + "," + currNode.game.getQuantity() + "\n";
 			}
 			currNode = currNode.next;
 		}

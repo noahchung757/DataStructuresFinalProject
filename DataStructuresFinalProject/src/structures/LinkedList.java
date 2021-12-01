@@ -146,7 +146,7 @@ public class LinkedList {
 		
 		if (!isEmpty()) {
 			while (stringNode != null) {
-				listString = listString + stringNode.data.toString() + "\n";
+				listString = listString + stringNode.data.gameList() + "\n";
 				stringNode = stringNode.next;
 			}
 			return listString;

@@ -19,6 +19,12 @@ public class Game {
 		this.price = price;
 		this.quantity = 1;
 	}
+	public Game(String name, double price, int quantity) {
+		super();
+		this.name = name;
+		this.price = price;
+		this.quantity = quantity;
+	}
 	
 	public String getName() {
 		return name;
