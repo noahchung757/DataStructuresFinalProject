@@ -22,11 +22,31 @@ import model.Genre;
 import structures.HashMap;
 import structures.LinkedList;
 
-/**
- * @author Noah Chung - nmchung
- * CIS175 - Fall 2021
- * Nov 9, 2021
- */
+/***************************************************************
+* Name         : DataStructuresFinalProject
+* Author       : Noah Chung
+* Created      : 11/9/2021
+* Course       : CIS 152 - Data Structures
+* Version      : 1.0
+* OS           : Windows 10
+* IDE          : Eclipse Enterprise Edition
+* Copyright    : This is my own original work based on
+*                      specifications issued by our instructor
+* Description  : This program creates an inventory system using GUI,
+* 					for games. It uses the HashMap and LinkedList Data 
+* 					Structures, a file to read and write to, for the 
+* 					games to be stored. The two classes are Games and
+* 					Genre. Through the GUI a user can add and remove
+* 					games as they buy or sell them.
+*                      Input : Game name, price, and genre for storing.
+*                      			Game name for selling/removing.
+*                      Output: List of games by genre.
+* Academic Honesty: I attest that this is my original work.
+* I have not used unauthorized source code, either modified or
+* unmodified. I have not given other fellow student(s) access
+* to my program. 
+***************************************************************/
+
 public class MainPanel extends JPanel {
 	HashMap map = new HashMap();
 	LinkedList list = new LinkedList();
@@ -49,6 +69,9 @@ public class MainPanel extends JPanel {
 		private JButton addButton = new JButton("Add");
 		
 		
+		/**
+		 * Implements J components for GUI
+		 */
 		StoreGamesPanel() {
 			addListener aL = new addListener();
 			addButton.addActionListener(aL);
@@ -68,6 +91,10 @@ public class MainPanel extends JPanel {
 			
 		}
 		class addListener implements ActionListener {
+			/**
+			 * Gets users input for game name, price, and genre input validates
+			 * then adds it to the list and map
+			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String name = nameField.getText().substring(0, 1).toUpperCase() + nameField.getText().substring(1).toLowerCase();
@@ -110,6 +137,10 @@ public class MainPanel extends JPanel {
 				}
 			}
 			
+			/**
+			 * Resets the text fields for after the user has entered data 
+			 * successfully
+			 */
 			public void resetFields() {
 				nameField.setText("");
 				priceField.setText("");
@@ -124,6 +155,9 @@ public class MainPanel extends JPanel {
 		private JButton buyButton = new JButton("Buy");
 		private JButton exitButton = new JButton("Exit");
 		
+		/**
+		 * 
+		 */
 		SearchGamesPanel() {
 			buyListener bL = new buyListener();
 			buyButton.addActionListener(bL);
@@ -138,6 +172,10 @@ public class MainPanel extends JPanel {
 		}
 		
 		class buyListener implements ActionListener {
+			/**
+			 * Gets input from user, input validates then if the game exists it
+			 * removes it from whatever genre it exists in.
+			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String game = searchField.getText();
@@ -164,6 +202,9 @@ public class MainPanel extends JPanel {
 		}
 		
 		class exitListener implements ActionListener {
+			/**
+			 * Generates a string of all the games and genres then adds to file
+			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String gameText = "";
@@ -199,10 +240,18 @@ public class MainPanel extends JPanel {
 		String gameText = "Games need to be added";
 		JTextArea gamesArea = new JTextArea(gameText, 400, 45);
 		
+		/**
+		 * 
+		 */
 		GamesByGenrePanel() {
 			add(gamesArea);
 		}
 		
+		/**
+		 * @throws ListEmptyException
+		 * Calls the sort method and updates the text box containing the list of
+		 * games and genres
+		 */
 		public void updateGamesList() throws ListEmptyException {
 			insertionSortGenres();
 			for (int i = 0; i < list.size(); i++) {
@@ -217,6 +266,11 @@ public class MainPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * @throws ListEmptyException
+	 * adds the JPanels to the MainPanel, sets the layout, creates a file if
+	 * not already created, if file is created reads the games from it.
+	 */
 	public MainPanel() throws ListEmptyException  {
 		setLayout(new BorderLayout());
 		
@@ -272,14 +326,15 @@ public class MainPanel extends JPanel {
 			br.close();
 		} 
 		catch (IOException e) {
-			
-		}
-		
-		for (int i = 0; i < list.size(); i++) {
-			
+			System.out.println("Broken");
 		}
 	}
 	
+	/**
+	 * @throws ListEmptyException
+	 * Updates the game panel by calling the updateGamesList() and using the
+	 * results to change the panel. Removes old panel and adds new panel.
+	 */
 	public void updatePanel() throws ListEmptyException {
 		GamesByGenrePanel test = new GamesByGenrePanel();
 		test.updateGamesList();
@@ -289,6 +344,10 @@ public class MainPanel extends JPanel {
 		revalidate();
 	}
 	
+	/**
+	 * @throws ListEmptyException
+	 * Sorts the genres so that they are in alphabetical order
+	 */
 	public void insertionSortGenres() throws ListEmptyException {
 		for (int i = 0; i < list.size(); ++i) {
 			Genre key = list.get(i);

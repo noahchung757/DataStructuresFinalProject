@@ -5,33 +5,69 @@ import java.text.DecimalFormat;
 import exceptions.MapEmptyException;
 import model.Game;
 
-/**
- * @author Noah Chung - nmchung
- * CIS175 - Fall 2021
- * Nov 16, 2021
- */
+/***************************************************************
+* Name         : DataStructuresFinalProject
+* Author       : Noah Chung
+* Created      : 11/16/2021
+* Course       : CIS 152 - Data Structures
+* Version      : 1.0
+* OS           : Windows 10
+* IDE          : Eclipse Enterprise Edition
+* Copyright    : This is my own original work based on
+*                      specifications issued by our instructor
+* Description  : This program creates an inventory system using GUI,
+* 					for games. It uses the HashMap and LinkedList Data 
+* 					Structures, a file to read and write to, for the 
+* 					games to be stored. The two classes are Games and
+* 					Genre. Through the GUI a user can add and remove
+* 					games as they buy or sell them.
+*                      Input : Game name, price, and genre for storing.
+*                      			Game name for selling/removing.
+*                      Output: List of games by genre.
+* Academic Honesty: I attest that this is my original work.
+* I have not used unauthorized source code, either modified or
+* unmodified. I have not given other fellow student(s) access
+* to my program. 
+***************************************************************/
+
 public class HashMap {
 	private Node head;
+	private int size;
 	
 	static class Node {
 		String gameName;
 		Game game;
 		Node next;
 		
+		/**
+		 * @param userGameName
+		 * @param userGame
+		 */
 		Node(String userGameName, Game userGame) {
 			gameName = userGameName;
 			game = userGame;
 			next = null;
 		}
 	}
+	/**
+	 * 
+	 */
 	public HashMap() {
+		size = 0;
 		head = null;
 	}
 	
+	/**
+	 * @return if the game is empty
+	 */
 	public boolean isEmpty() {
 		return (head == null);
 	}
 	
+	/**
+	 * @param gameName
+	 * @return if game is in the map
+	 */
 	public boolean hasGame(String gameName) {
 		if (isEmpty()) {
 			return false;
@@ -46,6 +82,11 @@ public class HashMap {
 		return false;
 	}
 	
+	/**
+	 * @param gameName
+	 * @return the game if it is found
+	 * @throws MapEmptyException
+	 */
 	public Game findGame(String gameName) throws MapEmptyException {
 		if (isEmpty()) {
 			throw new MapEmptyException();
@@ -60,9 +101,15 @@ public class HashMap {
 		return null;
 	}
 	
+	/**
+	 * @param gameName
+	 * @param game
+	 * Inserts game into map
+	 */
 	public void insertGame(String gameName, Game game) {
 		Node newNode = new Node(gameName, game);
 		Node currNode = head;
+		size++;
 		if (!isEmpty()) {
 			if (hasGame(gameName)) {
 				while (currNode != null) {
@@ -86,11 +133,17 @@ public class HashMap {
 		}
 	}
 	
+	/**
+	 * @param gameName
+	 * @throws MapEmptyException
+	 * Removes game from map
+	 */
 	public void removeGame(String gameName) throws MapEmptyException {
 		if (isEmpty()) {
 			throw new MapEmptyException();
 		}
 		if (hasGame(gameName)) {
+			size--;
 			Node currNode = head;
 			Node nodeAhead = null;
 			Node nodeBehind = null;
@@ -126,6 +179,17 @@ public class HashMap {
 		}
 	}
 	
+	/**
+	 * @return size
+	 */
+	public int size() {
+		return size;
+	}
+	
+	/**
+	 * @return a formated string to print the games
+	 * @throws MapEmptyException
+	 */
 	public String printGames() throws MapEmptyException {
 		if (isEmpty()) {
 			throw new MapEmptyException();
@@ -146,6 +210,10 @@ public class HashMap {
 		return gameString;
 	}
 	
+	/**
+	 * @return a formated string to print games to file
+	 * @throws MapEmptyException
+	 */
 	public String printGamesForFile() throws MapEmptyException {
 		if (isEmpty()) {
 			throw new MapEmptyException();

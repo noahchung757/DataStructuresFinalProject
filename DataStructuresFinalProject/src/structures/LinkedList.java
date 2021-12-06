@@ -3,11 +3,30 @@ package structures;
 import exceptions.ListEmptyException;
 import model.Genre;
 
-/**
- * @author Noah Chung - nmchung
- * CIS175 - Fall 2021
- * Nov 9, 2021
- */
+/***************************************************************
+* Name         : DataStructuresFinalProject
+* Author       : Noah Chung
+* Created      : 11/9/2021
+* Course       : CIS 152 - Data Structures
+* Version      : 1.0
+* OS           : Windows 10
+* IDE          : Eclipse Enterprise Edition
+* Copyright    : This is my own original work based on
+*                      specifications issued by our instructor
+* Description  : This program creates an inventory system using GUI,
+* 					for games. It uses the HashMap and LinkedList Data 
+* 					Structures, a file to read and write to, for the 
+* 					games to be stored. The two classes are Games and
+* 					Genre. Through the GUI a user can add and remove
+* 					games as they buy or sell them.
+*                      Input : Game name, price, and genre for storing.
+*                      			Game name for selling/removing.
+*                      Output: List of games by genre.
+* Academic Honesty: I attest that this is my original work.
+* I have not used unauthorized source code, either modified or
+* unmodified. I have not given other fellow student(s) access
+* to my program. 
+***************************************************************/
 
 public class LinkedList {
 	private Node head;
@@ -22,16 +41,26 @@ public class LinkedList {
 			next = null;
 		}
 	}
+	/**
+	 * Default constructor
+	 */
 	public LinkedList() {
 		Genre data = null;
 		size = 0;
 		head = new Node(data);
 	}
 	
+	/**
+	 * @return if the LinkedList is empty
+	 */
 	public boolean isEmpty() {
 		return (size == 0);
 	}
 	
+	/**
+	 * @param item
+	 * Adds Genre to list
+	 */
 	public void add(Genre item) {
 		Node dataNode = new Node(item);
 		
@@ -48,6 +77,12 @@ public class LinkedList {
 		size = size + 1;
 	}
 	
+	/**
+	 * @param index
+	 * @param item
+	 * @throws ListEmptyException
+	 * Replaces a Genre at the given index with a new Genre/item
+	 */
 	public void replace(int index, Genre item) throws ListEmptyException {
 		if (isEmpty()) {
 			throw new ListEmptyException();
@@ -69,6 +104,10 @@ public class LinkedList {
 		}
 	}
 	
+	/**
+	 * @throws ListEmptyException
+	 * Deletes the end element from the list
+	 */
 	public void delete() throws ListEmptyException {
 		if (isEmpty()) {
 			throw new ListEmptyException();
@@ -89,6 +128,11 @@ public class LinkedList {
 		}
 	}
 	
+	/**
+	 * @param index
+	 * @throws ListEmptyException
+	 * Deletes element at specified index
+	 */
 	public void deleteAt(int index) throws ListEmptyException {
 		if (isEmpty()) {
 			throw new ListEmptyException();
@@ -115,6 +159,11 @@ public class LinkedList {
 		size = size - 1;
 	}
 	
+	/**
+	 * @param index
+	 * @return the Genre at the desired index
+	 * @throws ListEmptyException
+	 */
 	public Genre get(int index) throws ListEmptyException {
 		if (isEmpty()) {
 			throw new ListEmptyException();
@@ -131,15 +180,17 @@ public class LinkedList {
 		}
 	}
 	
+	/**
+	 * @return size
+	 */
 	public int size() {
-		if (!isEmpty()) {
-			return size;
-		}
-		else {
-			return 0;
-		}
+		return size;
 	}
 	
+	/**
+	 * @return a formated string for printing
+	 * @throws ListEmptyException
+	 */
 	public String print() throws ListEmptyException {
 		Node stringNode = head;
 		String listString = "";
